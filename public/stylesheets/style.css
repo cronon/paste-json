@@ -1,8 +1,10 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	font-family: 'Consolas', 'Monospace', 'Courier New';
 }
-
-a {
-  color: #00B7FF;
+pre {
+	max-height: 60em;
+}
+textarea {
+	width: 80%;
+	height: 20em;
 }

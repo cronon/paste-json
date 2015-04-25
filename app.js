@@ -20,7 +20,7 @@ app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -31,7 +31,9 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/:id.html', routes.binHtml);
 app.get('/:id', routes.bin);
+app.post('/', routes.createBin);
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
