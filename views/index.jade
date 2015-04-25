@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  p Bin #{title} !
+  p content: #{bin}
+  form(action="/" method="POST")
+    textarea #{bin}
+    div: input(type="submit")
