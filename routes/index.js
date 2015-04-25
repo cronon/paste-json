@@ -8,9 +8,8 @@ exports.index = function(req, res){
 };
 
 exports.bin = function(req, res){
-  console.log(res)
   res.render('index', {
     title: 'res',
-    bin: '{sample: 18}'
+    bin: req.params.id
   });
 };
