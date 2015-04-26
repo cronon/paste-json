@@ -2,6 +2,8 @@
 /*
  * GET home page.
  */
+var mongo = require('mongoskin');
+var db = mongo.db("mongodb://localhost:27017/paste-json", {native_parser:true});
 
 exports.index = function(req, res){
   res.render('index', { title: 'Express' });
@@ -22,9 +24,14 @@ exports.bin = function(req, res){
 
 // post /
 exports.createBin = function(req, res){
-	console.log(req.body)
-	res.render('index', {
-    title: 'res',
-    bin: req.body.bin
-  });
+    db.collection('lastIndex').findOne(function(err, result){
+      var oldKey = result.key;
+      var newKey = oldKey + 1;
+      db.collection('lastIndex').update({key: oldKey}, {key: newKey}, function(err){
+        res.render('index', {
+          title: 'res',
+          bin: newKey
+        });   
+      })
+    })   
 }

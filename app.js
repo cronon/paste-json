@@ -10,7 +10,7 @@ var http = require('http');
 var path = require('path');
 
 var mongo = require('mongoskin');
-var db = mongo.db("mongodb://localhost:27017/nodetest2", {native_parser:true});
+var db = mongo.db("mongodb://localhost:27017/paste-json", {native_parser:true});
 var app = express();
 
 // all environments
@@ -30,6 +30,12 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    console.log('base',db)
+    req.db = db;
+    next();
+});
 app.get('/', routes.index);
 app.get('/:id.html', routes.binHtml);
 app.get('/:id', routes.bin);
