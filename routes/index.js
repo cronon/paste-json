@@ -3,7 +3,9 @@
  * GET home page.
  */
 var mongo = require('mongoskin');
-var db = mongo.db("mongodb://localhost:27017/paste-json", {native_parser:true});
+var mongo = require('mongoskin');
+var path = process.env.MONGOLAB_URI;
+var db = mongo.db(path, {native_parser:true});
 
 exports.index = function(req, res){
   res.render('index', { title: 'Express' });
@@ -34,14 +36,14 @@ exports.bin = function(req, res){
   var key = parseInt(req.params.id, 10)
   db.collection('bins').findOne({key: key}, function(err, result){
     if (err) throw err;
-    var bin;
-    if (result === null) {
-      bin = '';
-    } else {
-      bin = result.bin;
-    }
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.type('json');
-    res.send(bin);
+    if (result === null) {
+      res.status(404).send('Not found')
+    } else {
+      res.send(result.bin);
+    }
   })
 };
 
